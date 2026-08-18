@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<title>VidoCall</title>
+
+<style>
+:root{
+  --green:#18c878;
+  --green-dark:#0eaa63;
+  --black:#111111;
+  --gray:#707070;
+  --light:#f6f7f8;
+  --border:#e8e8e8;
+  --white:#ffffff;
+  --danger:#ff4d5a;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+  background:#fff;
+  color:var(--black);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.app{
+  min-height:100vh;
+  background:#fff;
+}
+
+/* HEADER */
+
+.header{
+  height:68px;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-.5px;
+}
+
+.logo-icon{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  background:var(--green);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.coin-box{
+  background:#f0fff8;
+  color:#099457;
+  border:1px solid #d5f7e6;
+  padding:8px 11px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:700;
+}
+
+/* CONTENT */
+
+.content{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  padding:18px 14px 100px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HOME */
+
+.hero{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:27px 20px;
+  box-shadow:0 8px 30px rgba(0,0,0,.045);
+  margin-bottom:17px;
+}
+
+.hero-label{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#f0fff8;
+  color:#0da660;
+  border-radius:20px;
+  padding:7px 11px;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:16px;
+}
+
+.live-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#19ca78;
+  box-shadow:0 0 0 4px rgba(24,200,120,.12);
+}
+
+.hero h1{
+  font-size:31px;
+  line-height:1.2;
+  letter-spacing:-1px;
+  margin-bottom:12px;
+}
+
+.hero h1 span{
+  color:var(--green);
+}
+
+.hero p{
+  color:var(--gray);
+  line-height:1.7;
+  font-size:14px;
+  margin-bottom:22px;
+}
+
+.main-btn{
+  width:100%;
+  height:53px;
+  border-radius:15px;
+  background:var(--green);
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  box-shadow:0 7px 18px rgba(24,200,120,.2);
+}
+
+.main-btn:active{
+  transform:scale(.98);
+}
+
+/* FILTER */
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:22px 2px 12px;
+}
+
+.section-head h2{
+  font-size:18px;
+}
+
+.section-head span{
+  color:var(--green-dark);
+  font-size:12px;
+  font-weight:700;
+}
+
+.filters{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:2px;
+}
+
+.filters::-webkit-scrollbar{
+  display:none;
+}
+
+.filter{
+  flex:0 0 auto;
+  padding:10px 14px;
+  border-radius:20px;
+  background:#f6f7f8;
+  color:#666;
+  font-size:12px;
+  font-weight:700;
+}
+
+.filter.active{
+  background:#111;
+  color:#fff;
+}
+
+/* USERS */
+
+.users{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:11px;
+}
+
+.user-card{
+  position:relative;
+  min-height:190px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#f4f4f4;
+  border:1px solid #eee;
+}
+
+.avatar{
+  width:100%;
+  height:100%;
+  min-height:190px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:60px;
+  background:linear-gradient(145deg,#f4f4f4,#e7e7e7);
+}
+
+.user-info{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:35px 11px 11px;
+  color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.75));
+}
+
+.user-name{
+  font-weight:800;
+  font-size:14px;
+}
+
+.user-status{
+  color:#b8ffd9;
+  font-size:10px;
+  margin-top:3px;
+}
+
+.call-small{
+  position:absolute;
+  top:9px;
+  right:9px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#fff;
+  color:var(--green-dark);
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
+
+/* BALANCE */
+
+.balance-card{
+  background:#111;
+  color:#fff;
+  border-radius:23px;
+  padding:22px;
+  margin-bottom:17px;
+}
+
+.balance-top{
+  color:#aaa;
+  font-size:13px;
+}
+
+.balance-number{
+  font-size:38px;
+  font-weight:900;
+  margin:8px 0 18px;
+}
+
+.balance-number small{
+  font-size:15px;
+  color:#aaa;
+}
+
+.balance-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.balance-btn{
+  height:45px;
+  border-radius:12px;
+  background:#222;
+  color:#fff;
+  font-weight:700;
+}
+
+.balance-btn.primary{
+  background:var(--green);
+}
+
+/* PACKAGES */
+
+.package{
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:11px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fff;
+}
+
+.package.featured{
+  border:2px solid var(--green);
+}
+
+.package-left h3{
+  font-size:15px;
+}
+
+.package-left p{
+  color:#888;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.package-coins{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:5px;
+}
+
+.package-price{
+  color:var(--green-dark);
+  font-size:12px;
+  font-weight:800;
+}
+
+.buy{
+  padding:10px 14px;
+  border-radius:12px;
+  background:#111;
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+}
+
+.featured .buy{
+  background:var(--green);
+}
+
+/* ACCOUNT */
+
+.profile{
+  text-align:center;
+  padding:22px 0;
+}
+
+.profile-avatar{
+  width:86px;
+  height:86px;
+  border-radius:50%;
+  background:#f1f1f1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:43px;
+  margin:0 auto 12px;
+  border:3px solid #fff;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+}
+
+.profile h2{
+  font-size:20px;
+}
+
+.profile p{
+  color:#888;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.menu{
+  border:1px solid var(--border);
+  border-radius:19px;
+  overflow:hidden;
+}
+
+.menu-item{
+  width:100%;
+  background:#fff;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border-bottom:1px solid var(--border);
+  text-align:right;
+}
+
+.menu-item:last-child{
+  border-bottom:0;
+}
+
+.menu-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#f5f5f5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.menu-text{
+  flex:1;
+}
+
+.menu-text strong{
+  display:block;
+  font-size:13px;
+}
+
+.menu-text span{
+  color:#999;
+  font-size:10px;
+}
+
+/* LOGIN */
+
+.login-box{
+  padding-top:35px;
+}
+
+.login-box h1{
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.login-box>p{
+  color:#888;
+  font-size:13px;
+  margin-bottom:25px;
+}
+
+.input{
+  width:100%;
+  height:52px;
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:0 15px;
+  outline:none;
+  margin-bottom:10px;
+  background:#fff;
+}
+
+.input:focus{
+  border-color:var(--green);
+}
+
+.secondary-btn{
+  width:100%;
+  height:50px;
+  border-radius:14px;
+  background:#f3f3f3;
+  color:#111;
+  font-weight:700;
+  margin-top:9px;
+}
+
+/* CALL */
+
+.call-screen{
+  position:fixed;
+  inset:0;
+  background:#111;
+  z-index:200;
+  display:none;
+  color:#fff;
+}
+
+.call-screen.active{
+  display:block;
+}
+
+.call-video{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:100px;
+  background:linear-gradient(145deg,#303030,#111);
+}
+
+.call-top{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  padding:22px 17px;
+  display:flex;
+  justify-content:space-between;
+  background:linear-gradient(rgba(0,0,0,.55),transparent);
+}
+
+.call-name{
+  font-weight:800;
+}
+
+.call-time{
+  color:#ddd;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.call-controls{
+  position:absolute;
+  bottom:28px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:center;
+  gap:13px;
+}
+
+.call-control{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:#333;
+  color:#fff;
+  font-size:19px;
+}
+
+.call-control.end{
+  background:#ff4050;
+}
+
+/* CHAT */
+
+.chat-list{
+  border:1px solid var(--border);
+  border-radius:19px;
+  overflow:hidden;
+}
+
+.chat{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px;
+  border-bottom:1px solid var(--border);
+}
+
+.chat:last-child{
+  border-bottom:0;
+}
+
+.chat-avatar{
+  width:49px;
+  height:49px;
+  border-radius:50%;
+  background:#f0f0f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.chat-info{
+  flex:1;
+}
+
+.chat-info strong{
+  display:block;
+  font-size:14px;
+}
+
+.chat-info span{
+  display:block;
+  color:#999;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.chat-time{
+  color:#aaa;
+  font-size:10px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:73px;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:100;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+
+.nav-btn{
+  background:transparent;
+  color:#999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:10px;
+  font-weight:700;
+}
+
+.nav-btn .nav-icon{
+  font-size:20px;
+}
+
+.nav-btn.active{
+  color:var(--green-dark);
+}
+
+.nav-center{
+  position:relative;
+}
+
+.nav-center .nav-icon{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  background:var(--green);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin-top:-20px;
+  box-shadow:0 7px 18px rgba(24,200,120,.25);
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:15px;
+  right:15px;
+  bottom:88px;
+  background:#111;
+  color:#fff;
+  border-radius:13px;
+  padding:14px;
+  text-align:center;
+  font-size:13px;
+  z-index:500;
+  transform:translateY(120px);
+  opacity:0;
+  transition:.25s;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:400;
+  display:none;
+  align-items:flex-end;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  background:#fff;
+  border-radius:25px 25px 0 0;
+  padding:23px 17px 30px;
+  animation:up .2s ease;
+}
+
+@keyframes up{
+  from{transform:translateY(100%)}
+  to{transform:translateY(0)}
+}
+
+.modal-title{
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.close-modal{
+  position:absolute;
+  top:12px;
+  left:15px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#f2f2f2;
+}
+
+.payment{
+  display:grid;
+  gap:9px;
+}
+
+.payment button{
+  height:52px;
+  border-radius:14px;
+  background:#f5f5f5;
+  text-align:right;
+  padding:0 15px;
+  font-weight:700;
+}
+
+/* DESKTOP */
+
+@media(min-width:700px){
+  .content{
+    padding-top:30px;
+  }
+
+  .users{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .bottom-nav{
+    left:50%;
+    right:auto;
+    width:500px;
+    transform:translateX(-50%);
+    border:1px solid var(--border);
+    border-bottom:0;
+    border-radius:20px 20px 0 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">▶</div>
+    <span id="brand">VidoCall</span>
+  </div>
+
+  <div class="header-right">
+    <div class="coin-box">
+      🪙 <span id="coins">100</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+<!-- HOME -->
+
+<section class="page active" id="homePage">
+
+  <div class="hero">
+    <div class="hero-label">
+      <span class="live-dot"></span>
+      <span data-i18n="live">متصل الآن</span>
+    </div>
+
+    <h1>
+      <span data-i18n="meet">قابل أشخاصًا</span>
+      <br>
+      <span data-i18n="world">من حول العالم</span>
+    </h1>
+
+    <p data-i18n="heroText">
+      تحدث، دردش، وابدأ مكالمة فيديو مع أشخاص جدد بسهولة.
+    </p>
+
+    <button class="main-btn" onclick="startRandomCall()">
+      🎥 <span data-i18n="start">ابدأ الآن</span>
+    </button>
+  </div>
+
+  <div class="section-head">
+    <h2 data-i18n="people">أشخاص متصلون</h2>
+    <span data-i18n="online">متصل الآن</span>
+  </div>
+
+  <div class="filters">
+    <button class="filter active" data-i18n="all">الكل</button>
+    <button class="filter" data-i18n="near">بالقرب منك</button>
+    <button class="filter" data-i18n="popular">الأكثر نشاطًا</button>
+    <button class="filter" data-i18n="new">جدد</button>
+  </div>
+
+  <div class="users">
+
+    <div class="user-card">
+      <button class="call-small" onclick="callUser('سارة')">📹</button>
+      <div class="avatar">👩🏻</div>
+      <div class="user-info">
+        <div class="user-name">سارة</div>
+        <div class="user-status">● متصلة الآن</div>
+      </div>
+    </div>
+
+    <div class="user-card">
+      <button class="call-small" onclick="callUser('آدم')">📹</button>
+      <div class="avatar">👨🏻</div>
+      <div class="user-info">
+        <div class="user-name">آدم</div>
+        <div class="user-status">● متصل الآن</div>
+      </div>
+    </div>
+
+    <div class="user-card">
+      <button class="call-small" onclick="callUser('لينا')">📹</button>
+      <div class="avatar">👩🏼</div>
+      <div class="user-info">
+        <div class="user-name">لينا</div>
+        <div class="user-status">● متصلة الآن</div>
+      </div>
+    </div>
+
+    <div class="user-card">
+      <button class="call-small" onclick="callUser('كريم')">📹</button>
+      <div class="avatar">👨🏼</div>
+      <div class="user-info">
+        <div class="user-name">كريم</div>
+        <div class="user-status">● متصل الآن</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CHAT -->
+
+<section class="page" id="chatPage">
+
+  <div class="section-head">
+    <h2 data-i18n="messages">الرسائل</h2>
+  </div>
+
+  <div class="chat-list">
+
+    <div class="chat" onclick="openChat('سارة')">
+      <div class="chat-avatar">👩🏻</div>
+      <div class="chat-info">
+        <strong>سارة</strong>
+        <span data-i18n="hello">مرحبًا 👋</span>
+      </div>
+      <div class="chat-time">الآن</div>
+    </div>
+
+    <div class="chat" onclick="openChat('آدم')">
+      <div class="chat-avatar">👨🏻</div>
+      <div class="chat-info">
+        <strong>آدم</strong>
+        <span data-i18n="videoCall">هل تريد مكالمة؟</span>
+      </div>
+      <div class="chat-time">2د</div>
+    </div>
+
+    <div class="chat" onclick="openChat('لينا')">
+      <div class="chat-avatar">👩🏼</div>
+      <div class="chat-info">
+        <strong>لينا</strong>
+        <span data-i18n="welcome">أهلًا بك</span>
+      </div>
+      <div class="chat-time">5د</div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CALL DISCOVER -->
+
+<section class="page" id="discoverPage">
+
+  <div class="section-head">
+    <h2 data-i18n="discover">اكتشف</h2>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">🌍 <span data-i18n="global">العالم أمامك</span></div>
+
+    <h1 data-i18n="discoverTitle">
+      ابحث عن شخص جديد
+    </h1>
+
+    <p data-i18n="discoverText">
+      اختر شخصًا وابدأ محادثة أو مكالمة فيديو.
+    </p>
+
+    <button class="main-btn" onclick="startRandomCall()">
+      🎲 <span data-i18n="random">مطابقة عشوائية</span>
+    </button>
+  </div>
+
+</section>
+
+<!-- WALLET -->
+
+<section class="page" id="walletPage">
+
+  <div class="section-head">
+    <h2 data-i18n="wallet">المحفظة</h2>
+  </div>
+
+  <div class="balance-card">
+
+    <div class="balance-top" data-i18n="yourBalance">
+      رصيدك الحالي
+    </div>
+
+    <div class="balance-number">
+      <span id="walletCoins">100</span>
+      <small>🪙</small>
+    </div>
+
+    <div class="balance-actions">
+      <button class="balance-btn primary" onclick="openPackages()">
+        + <span data-i18n="charge">شحن الرصيد</span>
+      </button>
+
+      <button class="balance-btn" onclick="showToast('سجل العمليات قريبًا')">
+        <span data-i18n="history">السجل</span>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="section-head">
+    <h2 data-i18n="packages">باقات الشحن</h2>
+  </div>
+
+  <div class="package">
+    <div class="package-left">
+      <h3>100 🪙</h3>
+      <p data-i18n="smallPackage">الباقة الصغيرة</p>
+    </div>
+
+    <div>
+      <div class="package-coins">$0.99</div>
+      <button class="buy" onclick="buyPackage(100,'$0.99')">
+        <span data-i18n="buy">شراء</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="package featured">
+    <div class="package-left">
+      <h3>500 🪙</h3>
+      <p data-i18n="mediumPackage">الأكثر طلبًا</p>
+    </div>
+
+    <div>
+      <div class="package-coins">$3.49</div>
+      <button class="buy" onclick="buyPackage(500,'$3.49')">
+        <span data-i18n="buy">شراء</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="package">
+    <div class="package-left">
+      <h3>1200 🪙</h3>
+      <p data-i18n="largePackage">قيمة أكبر</p>
+    </div>
+
+    <div>
+      <div class="package-coins">$6.99</div>
+      <button class="buy" onclick="buyPackage(1200,'$6.99')">
+        <span data-i18n="buy">شراء</span>
+      </button>
+    </div>
+  </div>
+
+</section>
+
+<!-- PROFILE -->
+
+<section class="page" id="profilePage">
+
+  <div class="profile">
+    <div class="profile-avatar">👤</div>
+    <h2 data-i18n="guest">زائر</h2>
+    <p data-i18n="loginRequired">سجل الدخول لحفظ حسابك وبياناتك</p>
+  </div>
+
+  <div class="menu">
+
+    <button class="menu-item" onclick="openLogin()">
+      <div class="menu-icon">👤</div>
+      <div class="menu-text">
+        <strong data-i18n="login">تسجيل الدخول</strong>
+        <span data-i18n="loginSub">حسابك في VidoCall</span>
+      </div>
+      <span>‹</span>
+    </button>
+
+    <button class="menu-item" onclick="showToast('الإعدادات ستتوفر قريبًا')">
+      <div class="menu-icon">⚙️</div>
+      <div class="menu-text">
+        <strong data-i18n="settings">الإعدادات</strong>
+        <span data-i18n="settingsSub">اللغة والإشعارات والخصوصية</span>
+      </div>
+      <span>‹</span>
+    </button>
+
+    <button class="menu-item" onclick="changeLanguage()">
+      <div class="menu-icon">🌐</div>
+      <div class="menu-text">
+        <strong data-i18n="language">اللغة</strong>
+        <span id="languageName">العربية</span>
+      </div>
+      <span>‹</span>
+    </button>
+
+    <button class="menu-item" onclick="showToast('مركز المساعدة قريبًا')">
+      <div class="menu-icon">❓</div>
+      <div class="menu-text">
+        <strong data-i18n="help">المساعدة</strong>
+        <span data-i18n="helpSub">تواصل معنا</span>
+      </div>
+      <span>‹</span>
+    </button>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- NAV -->
+
+<nav class="bottom-nav">
+
+  <button class="nav-btn active" onclick="goPage('homePage',this)">
+    <span class="nav-icon">🏠</span>
+    <span data-i18n="home">الرئيسية</span>
+  </button>
+
+  <button class="nav-btn" onclick="goPage('chatPage',this)">
+    <span class="nav-icon">💬</span>
+    <span data-i18n="chat">الدردشة</span>
+  </button>
+
+  <button class="nav-btn nav-center" onclick="goPage('discoverPage',this)">
+    <span class="nav-icon">🎥</span>
+    <span data-i18n="call">مكالمة</span>
+  </button>
+
+  <button class="nav-btn" onclick="goPage('walletPage',this)">
+    <span class="nav-icon">🪙</span>
+    <span data-i18n="walletNav">الرصيد</span>
+  </button>
+
+  <button class="nav-btn" onclick="goPage('profilePage',this)">
+    <span class="nav-icon">👤</span>
+    <span data-i18n="account">حسابي</span>
+  </button>
+
+</nav>
+
+<!-- CALL SCREEN -->
+
+<div class="call-screen" id="callScreen">
+
+  <div class="call-video">
+    <span id="callAvatar">👩🏻</span>
+  </div>
+
+  <div class="call-top">
+    <div>
+      <div class="call-name" id="callName">سارة</div>
+      <div class="call-time" id="callTime">00:00</div>
+    </div>
+
+    <button class="call-control" onclick="endCall()">✕</button>
+  </div>
+
+  <div class="call-controls">
+
+    <button class="call-control" onclick="showToast('تم تبديل الكاميرا')">
+      🔄
+    </button>
+
+    <button class="call-control" onclick="showToast('الميكروفون مغلق')">
+      🎙️
+    </button>
+
+    <button class="call-control end" onclick="endCall()">
+      ☎
+    </button>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <button class="close-modal" onclick="closeModal()">✕</button>
+
+    <div class="modal-title" id="modalTitle">
+      VidoCall
+    </div>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================
+   DATA
+========================= */
+
+let coins = Number(localStorage.getItem("vidocall_coins") || 100);
+let language = localStorage.getItem("vidocall_language") || detectLanguage();
+let callSeconds = 0;
+let callTimer = null;
+
+/* =========================
+   LANGUAGE
+========================= */
+
+const translations = {
+
+ar:{
+live:"متصل الآن",
+meet:"قابل أشخاصًا",
+world:"من حول العالم",
+heroText:"تحدث، دردش، وابدأ مكالمة فيديو مع أشخاص جدد بسهولة.",
+start:"ابدأ الآن",
+people:"أشخاص متصلون",
+online:"متصل الآن",
+all:"الكل",
+near:"بالقرب منك",
+popular:"الأكثر نشاطًا",
+new:"جدد",
+messages:"الرسائل",
+hello:"مرحبًا 👋",
+videoCall:"هل تريد مكالمة؟",
+welcome:"أهلًا بك",
+discover:"اكتشف",
+global:"العالم أمامك",
+discoverTitle:"ابحث عن شخص جديد",
+discoverText:"اختر شخصًا وابدأ محادثة أو مكالمة فيديو.",
+random:"مطابقة عشوائية",
+wallet:"المحفظة",
+yourBalance:"رصيدك الحالي",
+charge:"شحن الرصيد",
+history:"السجل",
+packages:"باقات الشحن",
+smallPackage:"الباقة الصغيرة",
+mediumPackage:"الأكثر طلبًا",
+largePackage:"قيمة أكبر",
+buy:"شراء",
+guest:"زائر",
+loginRequired:"سجل الدخول لحفظ حسابك وبياناتك",
+login:"تسجيل الدخول",
+loginSub:"حسابك في VidoCall",
+settings:"الإعدادات",
+settingsSub:"اللغة والإشعارات والخصوصية",
+language:"اللغة",
+help:"المساعدة",
+helpSub:"تواصل معنا",
+home:"الرئيسية",
+chat:"الدردشة",
+call:"مكالمة",
+walletNav:"الرصيد",
+account:"حسابي"
+},
+
+en:{
+live:"Online now",
+meet:"Meet people",
+world:"from around the world",
+heroText:"Talk, chat, and start a video call with new people easily.",
+start:"Start now",
+people:"People online",
+online:"Online now",
+all:"All",
+near:"Near you",
+popular:"Most active",
+new:"New",
+messages:"Messages",
+hello:"Hello 👋",
+videoCall:"Want to call?",
+welcome:"Welcome",
+discover:"Discover",
+global:"The world is yours",
+discoverTitle:"Find someone new",
+discoverText:"Choose someone and start a chat or video call.",
+random:"Random match",
+wallet:"Wallet",
+yourBalance:"Your current balance",
+charge:"Add coins",
+history:"History",
+packages:"Coin packages",
+smallPackage:"Small package",
+mediumPackage:"Most popular",
+largePackage:"Best value",
+buy:"Buy",
+guest:"Guest",
+loginRequired:"Sign in to save your account and data",
+login:"Sign in",
+loginSub:"Your VidoCall account",
+settings:"Settings",
+settingsSub:"Language, notifications and privacy",
+language:"Language",
+help:"Help",
+helpSub:"Contact us",
+home:"Home",
+chat:"Chat",
+call:"Call",
+walletNav:"Wallet",
+account:"Account"
+}
+
+};
+
+function detectLanguage(){
+
+  const lang = navigator.language || navigator.userLanguage || "en";
+
+  return lang.toLowerCase().startsWith("ar")
+    ? "ar"
+    : "en";
+}
+
+function applyLanguage(){
+
+  document.documentElement.lang = language;
+  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.dataset.i18n;
+
+    if(translations[language][key]){
+      el.textContent = translations[language][key];
+    }
+  });
+
+  const languageName = document.getElementById("languageName");
+
+  if(languageName){
+    languageName.textContent =
+      language === "ar" ? "العربية" : "English";
+  }
+
+  localStorage.setItem("vidocall_language",language);
+}
+
+/* =========================
+   COINS
+========================= */
+
+function updateCoins(){
+
+  document.getElementById("coins").textContent = coins;
+  document.getElementById("walletCoins").textContent = coins;
+
+  localStorage.setItem(
+    "vidocall_coins",
+    coins
+  );
+}
+
+updateCoins();
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function goPage(pageId,button){
+
+  document.querySelectorAll(".page")
+    .forEach(page=>{
+      page.classList.remove("active");
+    });
+
+  const page = document.getElementById(pageId);
+
+  if(page){
+    page.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav-btn")
+    .forEach(btn=>{
+      btn.classList.remove("active");
+    });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+/* =========================
+   CALL
+========================= */
+
+function startRandomCall(){
+
+  const users = [
+    {
+      name:"سارة",
+      avatar:"👩🏻"
+    },
+    {
+      name:"آدم",
+      avatar:"👨🏻"
+    },
+    {
+      name:"لينا",
+      avatar:"👩🏼"
+    },
+    {
+      name:"كريم",
+      avatar:"👨🏼"
+    }
+  ];
+
+  const user =
+    users[Math.floor(Math.random()*users.length)];
+
+  callUser(user.name,user.avatar);
+}
+
+function callUser(name,avatar="👩🏻"){
+
+  document.getElementById("callName").textContent =
+    name;
+
+  document.getElementById("callAvatar").textContent =
+    avatar;
+
+  document.getElementById("callScreen")
+    .classList.add("active");
+
+  callSeconds = 0;
+
+  updateCallTime();
+
+  clearInterval(callTimer);
+
+  callTimer = setInterval(()=>{
+    callSeconds++;
+    updateCallTime();
+  },1000);
+}
+
+function updateCallTime(){
+
+  const min =
+    String(Math.floor(callSeconds/60)).padStart(2,"0");
+
+  const sec =
+    String(callSeconds%60).padStart(2,"0");
+
+  document.getElementById("callTime").textContent =
+    min + ":" + sec;
+}
+
+function endCall(){
+
+  clearInterval(callTimer);
+
+  document.getElementById("callScreen")
+    .classList.remove("active");
+
+  showToast(
+    language === "ar"
+      ? "انتهت المكالمة"
+      : "Call ended"
+  );
+}
+
+/* =========================
+   CHAT
+========================= */
+
+function openChat(name){
+
+  openModal(
+    language === "ar"
+      ? "💬 محادثة " + name
+      : "💬 Chat with " + name,
+
+    `
+      <input
+        class="input"
+        id="messageInput"
+        placeholder="${
+          language === "ar"
+          ? "اكتب رسالتك..."
+          : "Write your message..."
+        }"
+      >
+
+      <button
+        class="main-btn"
+        onclick="sendMessage()"
+      >
+        ${
+          language === "ar"
+          ? "إرسال"
+          : "Send"
+        }
+      </button>
+    `
+  );
+}
+
+function sendMessage(){
+
+  const input =
+    document.getElementById("messageInput");
+
+  if(!input || !input.value.trim()){
+    showToast(
+      language === "ar"
+        ? "اكتب رسالة أولًا"
+        : "Write a message first"
+    );
+
+    return;
+  }
+
+  input.value = "";
+
+  closeModal();
+
+  showToast(
+    language === "ar"
+      ? "تم إرسال الرسالة"
+      : "Message sent"
+  );
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin(){
+
+  openModal(
+    language === "ar"
+      ? "👤 تسجيل الدخول"
+      : "👤 Sign in",
+
+    `
+      <input
+        class="input"
+        type="email"
+        placeholder="${
+          language === "ar"
+          ? "البريد الإلكتروني"
+          : "Email"
+        }"
+      >
+
+      <input
+        class="input"
+        type="password"
+        placeholder="${
+          language === "ar"
+          ? "كلمة المرور"
+          : "Password"
+        }"
+      >
+
+      <button
+        class="main-btn"
+        onclick="fakeLogin()"
+      >
+        ${
+          language === "ar"
+          ? "دخول"
+          : "Sign in"
+        }
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="closeModal()"
+      >
+        ${
+          language === "ar"
+          ? "إنشاء حساب جديد"
+          : "Create account"
+        }
+      </button>
+    `
+  );
+}
+
+function fakeLogin(){
+
+  closeModal();
+
+  showToast(
+    language === "ar"
+      ? "واجهة تسجيل الدخول جاهزة للربط بالسيرفر"
+      : "Sign-in UI is ready for server integration"
+  );
+}
+
+/* =========================
+   PACKAGES
+========================= */
+
+function openPackages(){
+
+  goPage(
+    "walletPage",
+    document.querySelectorAll(".nav-btn")[3]
+  );
+}
+
+function buyPackage(amount,price){
+
+  openModal(
+
+    language === "ar"
+      ? "🪙 شراء الرصيد"
+      : "🪙 Buy coins",
+
+    `
+      <p style="
+        color:#777;
+        font-size:13px;
+        line-height:1.7;
+        margin-bottom:15px;
+      ">
+        ${
+          language === "ar"
+          ? `ستشتري ${amount} عملة مقابل ${price}`
+          : `You will buy ${amount} coins for ${price}`
+        }
+      </p>
+
+      <div class="payment">
+
+        <button onclick="paymentSelected('card')">
+          💳 ${
+            language === "ar"
+            ? "بطاقة بنكية"
+            : "Bank card"
+          }
+        </button>
+
+        <button onclick="paymentSelected('paypal')">
+          🅿️ PayPal
+        </button>
+
+      </div>
+    `
+  );
+}
+
+function paymentSelected(method){
+
+  closeModal();
+
+  showToast(
+    language === "ar"
+      ? "نظام الدفع سيتم ربطه بالسيرفر"
+      : "Payment will be connected to the server"
+  );
+}
+
+/* =========================
+   LANGUAGE SWITCH
+========================= */
+
+function changeLanguage(){
+
+  language =
+    language === "ar"
+      ? "en"
+      : "ar";
+
+  applyLanguage();
+
+  showToast(
+    language === "ar"
+      ? "تم تغيير اللغة إلى العربية"
+      : "Language changed to English"
+  );
+}
+
+/* =========================
+   MODAL
+========================= */
+
+function openModal(title,content){
+
+  document.getElementById("modalTitle")
+    .textContent = title;
+
+  document.getElementById("modalContent")
+    .innerHTML = content;
+
+  document.getElementById("modal")
+    .classList.add("show");
+}
+
+function closeModal(){
+
+  document.getElementById("modal")
+    .classList.remove("show");
+}
+
+document.getElementById("modal")
+  .addEventListener("click",function(e){
+
+    if(e.target === this){
+      closeModal();
+    }
+
+  });
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function showToast(text){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = text;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },2500);
+}
+
+/* =========================
+   FILTERS
+========================= */
+
+document.querySelectorAll(".filter")
+.forEach(filter=>{
+
+  filter.addEventListener("click",function(){
+
+    document.querySelectorAll(".filter")
+      .forEach(f=>f.classList.remove("active"));
+
+    this.classList.add("active");
+
+  });
+
+});
+
+/* =========================
+   START
+========================= */
+
+applyLanguage();
+updateCoins();
+
+</script>
+
+</body>
+</html>
